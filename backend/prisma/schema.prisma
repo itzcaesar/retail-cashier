@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique // Barcode or QR code
+  name      String
+  price     Decimal  @db.Decimal(10, 2)
+  stock     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactionItems TransactionItem[]
+
+  @@index([code])
+}
+
+model Transaction {
+  id              Int               @id @default(autoincrement())
+  totalAmount     Decimal           @db.Decimal(10, 2)
+  itemCount       Int
+  paymentMethod   String            @default("CASH")
+  createdAt       DateTime          @default(now())
+  
+  items           TransactionItem[]
+
+  @@index([createdAt])
+}
+
+model TransactionItem {
+  id            Int         @id @default(autoincrement())
+  transactionId Int
+  productId     Int
+  productName   String      // Snapshot of product name at time of sale
+  quantity      Int
+  pricePerUnit  Decimal     @db.Decimal(10, 2)
+  subtotal      Decimal     @db.Decimal(10, 2)
+  
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  product       Product     @relation(fields: [productId], references: [id])
+
+  @@index([transactionId])
+  @@index([productId])
+}
