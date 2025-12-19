@@ -33,19 +33,6 @@ export default function Home() {
     setTimeout(() => setNotification(null), 3000);
   };
 
-  // Keyboard shortcuts
-  useKeyboardShortcuts({
-    'ctrl+enter': handleCheckout,
-    'ctrl+c': clearCart,
-    'esc': () => {
-      if (showSuccessModal) {
-        setShowSuccessModal(false);
-      } else if (showAddProductModal) {
-        setShowAddProductModal(false);
-      }
-    }
-  }, !showAddProductModal && !showSuccessModal); // Disable when modals are open
-
   const handleScan = async (code) => {
     setLoading(true);
     try {
@@ -180,6 +167,19 @@ export default function Home() {
       showNotification('Cart cleared');
     }
   };
+
+  // Keyboard shortcuts (must be after function declarations)
+  useKeyboardShortcuts({
+    'ctrl+enter': handleCheckout,
+    'ctrl+c': clearCart,
+    'esc': () => {
+      if (showSuccessModal) {
+        setShowSuccessModal(false);
+      } else if (showAddProductModal) {
+        setShowAddProductModal(false);
+      }
+    }
+  }, !showAddProductModal && !showSuccessModal);
 
   return (
     <>
