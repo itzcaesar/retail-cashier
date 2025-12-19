@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { getAllProducts, updateProductStock, generateQR } from '@/lib/api';
+import StockBadge from '@/components/StockBadge';
 import { QRCodeSVG } from 'qrcode.react';
 
 export default function Products() {
@@ -90,7 +91,7 @@ export default function Products() {
                       <th className="text-left p-3">Code</th>
                       <th className="text-left p-3">Name</th>
                       <th className="text-right p-3">Price</th>
-                      <th className="text-right p-3">Stock</th>
+                      <th className="text-left p-3">Stock</th>
                       <th className="text-center p-3">Actions</th>
                     </tr>
                   </thead>
@@ -102,31 +103,36 @@ export default function Products() {
                         <td className="p-3 text-right">
                           Rp {parseFloat(product.price).toLocaleString('id-ID')}
                         </td>
-                        <td className="p-3 text-right">
+                        <td className="p-3">
                           {editingStock === product.id ? (
-                            <input
-                              type="number"
-                              defaultValue={product.stock}
-                              className="w-20 p-1 border rounded text-right"
-                              onBlur={(e) => handleUpdateStock(product.id, e.target.value)}
-                              onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                  handleUpdateStock(product.id, e.target.value);
-                                }
-                              }}
-                              autoFocus
-                            />
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="number"
+                                min="0"
+                                defaultValue={product.stock}
+                                className="w-24 p-2 border rounded text-right"
+                                onBlur={(e) => handleUpdateStock(product.id, e.target.value)}
+                                onKeyPress={(e) => {
+                                  if (e.key === 'Enter') {
+                                    handleUpdateStock(product.id, e.target.value);
+                                  }
+                                }}
+                                autoFocus
+                              />
+                              <button
+                                onClick={() => setEditingStock(null)}
+                                className="text-gray-500 hover:text-gray-700 text-sm"
+                              >
+                                Cancel
+                              </button>
+                            </div>
                           ) : (
-                            <span
+                            <div
                               onClick={() => setEditingStock(product.id)}
-                              className={`cursor-pointer ${
-                                product.stock <= 0 ? 'text-red-600 font-bold' :
-                                product.stock < 10 ? 'text-orange-600' :
-                                'text-green-600'
-                              }`}
+                              className="cursor-pointer"
                             >
-                              {product.stock}
-                            </span>
+                              <StockBadge stock={product.stock} threshold={10} />
+                            </div>
                           )}
                         </td>
                         <td className="p-3 text-center">
@@ -134,7 +140,7 @@ export default function Products() {
                             onClick={() => showQR(product)}
                             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
                           >
-                            Show QR
+                            📱 QR
                           </button>
                         </td>
                       </tr>

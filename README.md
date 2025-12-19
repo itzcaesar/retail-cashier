@@ -9,19 +9,22 @@ A production-ready **Point of Sale (POS) system** built for small retail stores 
 ### Core Functionality
 - ⚡ **Lightning-fast checkout** with barcode/QR scanning
 - 🔄 **Automatic inventory deduction** after each sale
-- 📦 **Real-time stock management**
+- 📦 **Real-time stock management** with low-stock warnings
 - 💰 **Cash payment processing**
 - 📊 **Daily sales reporting**
 - 🏷️ **QR code generation** for products
 - 🔐 **Atomic transactions** (no partial sales)
+- ✅ **Transaction success modal** with instant feedback
 
 ### User Experience
 - 🎯 **Zero typing required** during checkout
-- 📱 **Tablet-optimized UI** with large buttons
+- 📱 **Responsive design** - tablet and desktop optimized
 - ⌨️ **HID keyboard mode** scanner support
-- 🔁 **Auto-focus scanner input** field
-- ⚠️ **Stock validation** before checkout
+- 🔁 **Auto-focus scanner input** with visual feedback
+- ⚠️ **Stock validation** before checkout with warnings
 - ➕ **Quick product creation** when barcode not found
+- ⌨️ **Keyboard shortcuts** for power users (Ctrl+Enter, Ctrl+C)
+- 🎨 **Visual status indicators** for stock levels
 
 ---
 
@@ -196,6 +199,20 @@ Frontend will run on **http://localhost:3000**
 - Generic Bluetooth HID scanners
 - USB barcode scanners (on computers)
 - Any scanner that emulates keyboard input
+
+---
+
+## ⌨️ Keyboard Shortcuts (Desktop/Laptop)
+
+Boost productivity with these keyboard shortcuts:
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl + Enter` | Complete checkout |
+| `Ctrl + C` | Clear cart |
+| `ESC` | Close modals |
+
+The scanner input field auto-focuses, so you can start scanning immediately!
 
 ---
 

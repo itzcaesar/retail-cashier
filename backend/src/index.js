@@ -18,6 +18,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check root
+app.get('/', (req, res) => {
+  res.json({ message: 'POS Backend API', status: 'running' });
+});
+
 // Routes
 app.use('/api/products', productRoutes);
 app.use('/api/transactions', transactionRoutes);
