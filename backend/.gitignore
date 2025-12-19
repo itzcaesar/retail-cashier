@@ -4,4 +4,4 @@ dist
 build
 *.log
 .DS_Store
-.INSTRUCTIONS.md
+INSTRUCTIONS.md
