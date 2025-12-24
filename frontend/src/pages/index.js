@@ -225,7 +225,7 @@ export default function Home() {
             <ScannerInput onScan={handleScan} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 pb-32 lg:pb-0">
             {/* Cart Items */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-md p-6">
@@ -269,7 +269,7 @@ export default function Home() {
                           <div className="flex items-center gap-1 md:gap-2">
                             <button
                               onClick={() => updateQuantity(item.id, -1)}
-                              className="w-8 h-8 md:w-10 md:h-10 bg-gray-300 hover:bg-gray-400 rounded-lg text-lg md:text-xl font-bold"
+                              className="w-10 h-10 md:w-10 md:h-10 bg-gray-300 hover:bg-gray-400 rounded-lg text-lg md:text-xl font-bold flex items-center justify-center"
                             >
                               -
                             </button>
@@ -278,7 +278,7 @@ export default function Home() {
                             </span>
                             <button
                               onClick={() => updateQuantity(item.id, 1)}
-                              className="w-8 h-8 md:w-10 md:h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-lg md:text-xl font-bold"
+                              className="w-10 h-10 md:w-10 md:h-10 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-lg md:text-xl font-bold flex items-center justify-center"
                               disabled={item.quantity >= item.maxStock}
                             >
                               +
@@ -295,7 +295,7 @@ export default function Home() {
                           {/* Remove Button */}
                           <button
                             onClick={() => removeItem(item.id)}
-                            className="w-8 h-8 md:w-10 md:h-10 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold"
+                            className="w-10 h-10 md:w-10 md:h-10 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold flex items-center justify-center"
                           >
                             ×
                           </button>
@@ -307,8 +307,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Summary & Checkout */}
-            <div className="lg:col-span-1">
+            {/* Desktop Summary & Checkout */}
+            <div className="hidden lg:block lg:col-span-1">
               <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
                 <h2 className="text-2xl font-bold mb-4">Summary</h2>
 
@@ -345,6 +345,23 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky Footer Checkout */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 lg:hidden z-40">
+        <div className="flex items-center justify-between gap-4 max-w-6xl mx-auto">
+          <div>
+             <p className="text-sm text-gray-500">{cart.reduce((sum, item) => sum + item.quantity, 0)} items</p>
+             <p className="text-xl font-bold text-blue-600">Rp {total.toLocaleString('id-ID')}</p>
+          </div>
+          <button
+            onClick={handleCheckout}
+            disabled={cart.length === 0 || loading}
+            className="btn-success flex-1 text-lg py-3 px-6 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? 'Processing...' : '💰 Checkout'}
+          </button>
         </div>
       </div>
 
